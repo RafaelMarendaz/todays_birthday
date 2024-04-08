@@ -1,2 +1,10 @@
-# todays_birthday
-Plugin moodle para listar o bloco de aniversariantes
+Today's Birthday
+
+==========================
+
+Lista os aniversariantes do dia
+
+===========================
+
+(1) Descompacte o plugin no diretorio /blocks
+(2) Acesse a administração do site e complete a instalação do plugin

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/todays_birthday/db" VERSION="20240325" COMMENT="XMLDB file for Moodle blocks/aniversariantes"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="todays_birthday" COMMENT="Tabela para armazenar dados do plugin aniversariantes">
+                <FIELDS>
+                    <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" AUTO="true" SEQUENCE="true" COMMENT="Chave primária autoincremental" />
+                    <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" COMMENT="ID do usuário"/>
+                    <FIELD NAME="birthday" TYPE="datetime" NOTNULL="true" COMMENT="Campo para data"/>
+                </FIELDS>
+                <KEYS>
+                    <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+                    <KEY NAME="useridfk" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" COMMENT="fk to user"/>
+                </KEYS>
+            </TABLE>
+  </TABLES>
+</XMLDB>
