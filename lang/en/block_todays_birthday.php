@@ -23,3 +23,6 @@ $string['somente_estudantes'] = 'Only Students';
 $string['noaniversaries'] = 'There are no birthdays today.';
 $string['viewalldays'] = 'View all birthdays of the day';
 $string['backtohome'] = 'Back to home page';
+$string['allbirthday'] = 'All birthdays';
+$string['date_of_birth'] = 'Date';
+

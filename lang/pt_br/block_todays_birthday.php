@@ -21,3 +21,5 @@ $string['somente_estudantes'] = 'Somente Estudantes';
 $string['noaniversaries'] = 'Não há aniversariantes hoje.';
 $string['viewalldays'] = 'Ver todos os aniversariantes do dia';
 $string['backtohome'] = 'Voltar para a página inicial';
+$string['allbirthday'] = 'Todos os Aniversariantes';
+$string['date_of_birth'] = 'Data';

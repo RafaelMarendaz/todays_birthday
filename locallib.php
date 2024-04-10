@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * TODO describe file settings
+ * TODO describe file locallib
  *
  * @package    block_todays_birthday
  * @copyright  2024 YOUR NAME <your@email.com>
@@ -23,16 +23,29 @@
  */
 
 
- if ($ADMIN->fulltree) {
-    // Configuração para escolher quem pode ver os aniversariantes
-    $settings->add(new admin_setting_configselect(
-        'block_todays_birthday_visibilidade',
-        get_string('config_visibilidade', 'block_todays_birthday'),
-        get_string('config_visibilidade_desc', 'block_todays_birthday'),
-        'todos', // Valor padrão
-        array(
-            'todos' => get_string('todos', 'block_todays_birthday'),
-            'estudantes' => get_string('somente_estudantes', 'block_todays_birthday')
-        )
-    ));
+function locallib_get_todays_birthday()
+{
+    global $DB;
+    $today = date('m-d');
+    $aniversariantes = $DB->get_records_sql("
+    SELECT u.id, u.firstname, u.lastname, u.picture
+    FROM {todays_birthday} tb
+    JOIN {user} u ON tb.userid = u.id
+    WHERE DATE_FORMAT(tb.birthday, '%m-%d') = ?
+    ", array($today));
+    return $aniversariantes;
 }
+
+function locallib_get_limited_todays_birthday()
+{
+    global $DB;
+    $today = date('m-d');
+    $aniversariantes = $DB->get_records_sql("
+    SELECT u.id, u.firstname, u.lastname, u.picture
+    FROM {todays_birthday} tb
+    JOIN {user} u ON tb.userid = u.id
+    WHERE DATE_FORMAT(tb.birthday, '%m-%d') = ?
+    ", array($today), 0, 10);
+    return $aniversariantes;
+}
+

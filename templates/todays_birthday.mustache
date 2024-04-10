@@ -1,9 +1,18 @@
 <!-- block_todays_birthday_template.mustache -->
 
+<style>
+    .block_todays_birthday img {
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    .block_todays_birthday img, .block_todays_birthday p {
+        margin-bottom: 5px;
+    }
+</style>
+
 <div class="block block_todays_birthday">
     <div class="content">
         {{{block_content}}}
         <p><a href="{{url_todos}}">{{ver_todos}}</a></p>
-        <p><a href="{{url_home}}">{{voltar_inicio}}</a></p>
     </div>
 </div>
