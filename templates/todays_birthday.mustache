@@ -12,7 +12,11 @@
 
 <div class="block block_todays_birthday">
     <div class="content">
-        {{{block_content}}}
+        {{#aniversariantes}}
+            <img src="{{foto_html}}" alt="{{fullname}}">
+            {{fullname}}
+            <br>
+        {{/aniversariantes}}
         <p><a href="{{url_todos}}">{{ver_todos}}</a></p>
     </div>
 </div>

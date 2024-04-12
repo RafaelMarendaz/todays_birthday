@@ -32,55 +32,60 @@ class block_todays_birthday extends block_base // Referenciando a classe block_b
     }
 
     public function get_content()
-    {
-        global $CFG, $PAGE, $OUTPUT;
+{
+    global $CFG, $PAGE, $OUTPUT;
 
-        if ($this->content !== null) {
-            return $this->content;
-        }
-
-        $this->content = new \stdClass; // Referenciando a classe stdClass com o namespace global
-
-        // Recuperar aniversariantes do dia
-        $aniversariantes = locallib_get_limited_todays_birthday(); // Retorna os aniversariantes do dia
-
-        // Definindo os dados para o template Mustache
-        $template_data = array(
-            'ver_todos' => get_string('viewalldays', 'block_todays_birthday'),
-            'voltar_inicio' => get_string('backtohome', 'block_todays_birthday'),
-            'url_todos' => $CFG->wwwroot . '/blocks/todays_birthday/allbirthday.php',
-            'url_home' => $CFG->wwwroot . '/index.php'
-        );
-
-        // Verificar se há aniversariantes
-        if ($aniversariantes) {
-            $html = '';
-            foreach ($aniversariantes as $aniversariante) {
-                $nome_completo = fullname($aniversariante);
-        
-                // Usar a classe user_picture para obter a imagem do perfil
-                $userpicture = new user_picture($aniversariante);
-        
-                // Obter a tag de imagem HTML completa com tamanho 50x50 e forma circular
-                $foto_html = $userpicture->get_url($PAGE, $OUTPUT, array('size' => 50, 'shape' => 'circle'))->__toString();
-        
-                // Adicionando na variável de HTML as imagens e nomes completos
-                $html .= '<img src="' . $foto_html . '" alt="' . $nome_completo . '">' . ' ' . $nome_completo . '<br>';
-            }
-            $template_data['block_content'] = $html;
-            // Renderizando o template Mustache
-            $this->content->text = $OUTPUT->render_from_template('block_todays_birthday/todays_birthday', $template_data);
-        }
-        
-         else {
-            $template_data['no_aniversaries_message'] = get_string('noaniversaries', 'block_todays_birthday');
-            // Renderizando o template Mustache
-            $this->content->text = $OUTPUT->render_from_template('block_todays_birthday/no_aniversaries', $template_data);
-        }
-
+    if ($this->content !== null) {
         return $this->content;
-
     }
+
+    $this->content = new \stdClass; // Referenciando a classe stdClass com o namespace global
+
+    // Recuperar aniversariantes do dia
+    $aniversariantes = locallib_get_limited_todays_birthday(); // Retorna os aniversariantes do dia
+
+    // Definindo os dados para o template Mustache
+    $template_data = array(
+        'ver_todos' => get_string('viewalldays', 'block_todays_birthday'),
+        'voltar_inicio' => get_string('backtohome', 'block_todays_birthday'),
+        'url_todos' => $CFG->wwwroot . '/blocks/todays_birthday/allbirthday.php',
+        'url_home' => $CFG->wwwroot . '/index.php',
+    );
+
+    // Verificar se há aniversariantes
+    if ($aniversariantes) {
+        $aniversariantes_data = array();
+        foreach ($aniversariantes as $aniversariante) {
+            $nome_completo = fullname($aniversariante);
+    
+            // Usar a classe user_picture para obter a imagem do perfil
+            $userpicture = new user_picture($aniversariante);
+    
+            // Obter a tag de imagem HTML completa com tamanho 50x50 e forma circular
+            $foto_html = $userpicture->get_url($PAGE, $OUTPUT)->__toString();
+
+            // Adicionando os dados de cada aniversariante ao array
+            $aniversariantes_data[] = array(
+                'fullname' => $nome_completo,
+                'foto_html' => $foto_html,
+            );
+        }
+        // Adicionando os aniversariantes ao template data
+        $template_data['aniversariantes'] = $aniversariantes_data;
+
+        // Renderizando o template Mustache
+        $this->content->text = $OUTPUT->render_from_template('block_todays_birthday/todays_birthday', $template_data);
+    }
+    
+    else {
+        $template_data['no_aniversaries_message'] = get_string('noaniversaries', 'block_todays_birthday');
+        // Renderizando o template Mustache
+        $this->content->text = $OUTPUT->render_from_template('block_todays_birthday/no_aniversaries', $template_data);
+    }
+
+    return $this->content;
+}
+
 
     public function instance_allow_multiple() // O bloco pode ser exibido mais de uma vez
     {
